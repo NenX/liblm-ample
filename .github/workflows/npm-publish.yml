@@ -26,7 +26,7 @@ jobs:
           ref: "release"
           token: ${{ secrets.GITHUB_TOKEN }}  # 使用 Personal Access Token
           fetch-depth: 0  # 获取完整历史记录
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v6
         with:
           node-version: 24
           registry-url: https://registry.npmjs.org/
