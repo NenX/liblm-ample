@@ -1,0 +1,29 @@
+{
+  "name": "root",
+  "private": true,
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "build": "lerna run build",
+    "lerna:clean": "lerna clean && rimraf node_modules -rf",
+    "lerna:publish": "lerna publish patch --registry=https://registry.npmjs.org/ -y",
+    "release": "pnpm build && pnpm lerna:publish"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "lerna": "9.0.3",
+    "@rollup/plugin-babel": "^5.3.1",
+    "@rollup/plugin-commonjs": "^21.0.2",
+    "@rollup/plugin-json": "^4.1.0",
+    "@rollup/plugin-node-resolve": "^13.1.3",
+    "@rollup/plugin-typescript": "^8.3.1",
+    "rollup": "^2.70.2",
+    "rollup-plugin-copy": "^3.4.0",
+    "@babel/core": "^7.10.5",
+    "@babel/preset-env": "^7.16.11",
+    "rimraf": "^6.0.1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

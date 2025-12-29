@@ -1,0 +1,22 @@
+{
+  "name": "@lm_fe/static",
+  "version": "0.1.201",
+  "description": "",
+  "scripts": {
+    "build": "node ./write_meta.js && rollup -c rollup.config.js"
+  },
+  "main": "dist/index.js",
+  "files": [
+    "asserts",
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "devDependencies": {
+    "rollup": "^2.70.2"
+  },
+  "author": "",
+  "license": "ISC",
+  "gitHead": "632baeaa7325599e87ffc96fc13e4cf33bcc112a"
+}

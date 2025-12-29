@@ -1,0 +1,47 @@
+{
+    "name": "@lm_fe/scripts",
+    "version": "0.1.201",
+    "description": "",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "build": "rollup -c rollup.config.js",
+        "build:watch": "rollup -c rollup.config.js --watch",
+        "clean": "rimraf dist -rf",
+        "prebuild": "pnpm clean"
+    },
+    "bin": {
+        "gen-routes": "dist/gen-routes.js",
+        "gen-form-config": "dist/gen-form-config.js",
+        "copy-static": "dist/copy-static.js",
+        "color-log": "dist/color-log.js",
+        "lm-cli": "dist/cli.js"
+    },
+    "main": "dist/index.js",
+    "directories": {
+        "lib": "dist"
+    },
+    "files": [
+        "dist"
+    ],
+    "publishConfig": {
+        "access": "public"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "MIT",
+    "devDependencies": {
+        "@types/json2md": "^1.5.1",
+        "@types/node": "^22.13.11",
+        "@types/yargs-parser": "^21.0.0",
+        "rollup": "^2.70.2"
+    },
+    "dependencies": {
+        "@lm_fe/static": "^0.1.201",
+        "@noah-libjs/utils": "0.0.48",
+        "chalk": "^4.1.2",
+        "dayjs": "^1.11.13",
+        "json2md": "^2.0.2",
+        "yargs-parser": "^21.1.1"
+    },
+    "gitHead": "632baeaa7325599e87ffc96fc13e4cf33bcc112a"
+}
