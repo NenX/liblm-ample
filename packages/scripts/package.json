@@ -1,6 +1,6 @@
 {
     "name": "@lm_fe/scripts",
-    "version": "0.1.202",
+    "version": "0.1.203",
     "description": "",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
@@ -36,7 +36,7 @@
         "rollup": "^2.70.2"
     },
     "dependencies": {
-        "@lm_fe/static": "^0.1.202",
+        "@lm_fe/static": "^0.1.203",
         "@noah-libjs/utils": "0.0.48",
         "chalk": "^4.1.2",
         "dayjs": "^1.11.13",
