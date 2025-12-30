@@ -1,6 +1,6 @@
 {
   "name": "@lm_fe/lm_x",
-  "version": "0.1.204",
+  "version": "0.1.205",
   "description": "Template project for writing node package with napi-rs",
   "main": "index.js",
   "repository": {
@@ -108,9 +108,9 @@
   },
   "packageManager": "yarn@4.12.0",
   "optionalDependencies": {
-    "@lm_fe/lm_x-win32-x64-msvc": "1.0.0",
+    "@lm_fe/lm_x-darwin-arm64": "1.0.0",
     "@lm_fe/lm_x-darwin-x64": "1.0.0",
     "@lm_fe/lm_x-linux-x64-gnu": "1.0.0",
-    "@lm_fe/lm_x-darwin-arm64": "1.0.0"
+    "@lm_fe/lm_x-win32-x64-msvc": "1.0.0"
   }
 }
