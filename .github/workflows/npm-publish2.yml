@@ -125,6 +125,9 @@ jobs:
       - name: Install dependencies
         run: pnpm install --no-frozen-lockfile
 
+      - name: Version
+        run: pnpm lerna:version
+        shell: bash
 
       - name: Download all artifacts
         uses: actions/download-artifact@v7
@@ -143,7 +146,43 @@ jobs:
         run: ls -R ./packages/*/npm
         shell: bash
 
+
+      # - run: pnpm run build
+
+
+
+      - run: git config --global user.email "noah199@qq.com"
+      - run: git config --global user.name "NenX"
+
+
+      - name: Build Auto Commit
+        uses: stefanzweifel/git-auto-commit-action@v7.1.0
+        with:
+          commit_message: "after build !!"
+          branch: "release"  # 修复：使用当前分支而不是head_ref
+          commit_options: '--no-verify'
+          push_options: '--force'
+
+
+      - run: pnpm lerna:publish
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+
+
+      - name: Git Auto Commit
+        uses: stefanzweifel/git-auto-commit-action@v7.1.0
+        with:
+        # Commit message
+          commit_message: "release !!"
+        # Git branch name, where changes should be pushed too
+          branch: "release"  # 修复：使用当前分支而不是head_ref
+        # Commit options
+          commit_options: '--no-verify'
+        # Push options
+          push_options: '--force'
       - run: echo "release 成功！"
+
+
 
 
 

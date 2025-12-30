@@ -146,8 +146,7 @@ jobs:
       - run: pnpm lerna:publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
-          # NPM_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
-      - run: git status
+
 
       - name: Git Auto Commit
         uses: stefanzweifel/git-auto-commit-action@v7.1.0
