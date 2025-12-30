@@ -1,6 +1,6 @@
 {
   "name": "@lm_fe/lm_x",
-  "version": "0.1.207",
+  "version": "0.1.208",
   "description": "Template project for writing node package with napi-rs",
   "main": "index.js",
   "repository": {
