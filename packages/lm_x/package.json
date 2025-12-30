@@ -53,8 +53,8 @@
     "napi:createNpmDirs": "napi create-npm-dirs",
     "napi:artifacts": "napi artifacts",
     "napi:prepare": "pnpm napi:createNpmDirs && pnpm napi:artifacts",
-    "preversion": "napi build --platform && git add .",
-    "version": "napi version",
+    "prevversion": "napi build --platform && git add .",
+    "vversion": "napi version",
     "prepare": "husky"
   },
   "devDependencies": {
