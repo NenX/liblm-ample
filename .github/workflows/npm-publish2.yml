@@ -92,9 +92,9 @@ jobs:
         with:
           name: bindings-${{ matrix.settings.target }}
           path: |
-            packages/*/npm/*/${{ env.APP_NAME }}.*.wasm
-            packages/*/npm/*/${{ env.APP_NAME }}.*.node
-            # packages/*/npm/*/${{ env.APP_NAME }}.*.node
+            packages/*/${{ env.APP_NAME }}.*.wasm
+            packages/*/${{ env.APP_NAME }}.*.node
+            # packages/*/${{ env.APP_NAME }}.*.node
             # packages/*/${{ env.APP_NAME }}.*.wasm
           if-no-files-found: error
 
