@@ -89,7 +89,7 @@ jobs:
         run: pnpm napi:prepare
         shell: bash
       - name: List packages
-        run: ls -R ./packages/lm_x
+        run: ls -R ./packages/lm_x/npm
         shell: bash
 
       - name: Upload artifact
