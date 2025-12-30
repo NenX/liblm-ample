@@ -95,9 +95,10 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v6
         with:
-          name: bindings-${{ matrix.settings.target }}
+          # name: bindings-${{ matrix.settings.target }}
           path: |
-            packages/*/npm
+            packages/*/npm/*/${{ env.APP_NAME }}.*.wasm
+            packages/*/npm/*/${{ env.APP_NAME }}.*.node
             # packages/*/npm/*/${{ env.APP_NAME }}.*.node
             # packages/*/${{ env.APP_NAME }}.*.wasm
           if-no-files-found: error
