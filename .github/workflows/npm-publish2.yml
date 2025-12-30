@@ -147,7 +147,7 @@ jobs:
         shell: bash
 
 
-      # - run: pnpm run build
+      - run: pnpm run build
 
 
 
