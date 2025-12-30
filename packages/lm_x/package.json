@@ -51,7 +51,7 @@
     "test": "ava",
     "napi:build": "napi build --platform --release",
     "napi:createNpmDirs": "napi create-npm-dirs",
-    "napi:artifacts": "napi artifacts",
+    "napi:artifacts": "napi artifacts -o .",
     "napi:prepare": "pnpm napi:createNpmDirs && pnpm napi:artifacts",
     "prevversion": "napi build --platform && git add .",
     "vversion": "napi version",
