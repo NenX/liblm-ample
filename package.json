@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "lerna:version": "lerna version --no-push --no-git-tag-version",
+    "lerna:version": "lerna version patch --yes --no-push --no-git-tag-version",
     "build": "lerna run build",
     "napi:build": "lerna run napi:build",
     "napi:prepare": "lerna run napi:prepare",
