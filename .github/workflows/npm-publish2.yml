@@ -136,9 +136,9 @@ jobs:
         run: ls -R ./packages/lm_x
         shell: bash
 
-      # - name: List artifacts
-      #   run: ls -R ./artifacts
-      #   shell: bash
+      - name: List artifacts after download
+        run: ls -R ./artifacts
+        shell: bash
 
       - run: echo "release 成功！"
 
