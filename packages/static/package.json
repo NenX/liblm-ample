@@ -1,6 +1,6 @@
 {
   "name": "@lm_fe/static",
-  "version": "0.1.210",
+  "version": "0.1.211",
   "description": "",
   "scripts": {
     "build": "node ./write_meta.js && rollup -c rollup.config.js"
