@@ -93,7 +93,7 @@ importers:
   packages/scripts:
     dependencies:
       '@lm_fe/static':
-        specifier: ^0.1.209
+        specifier: ^0.1.210
         version: link:../static
       '@noah-libjs/utils':
         specifier: 0.0.48
