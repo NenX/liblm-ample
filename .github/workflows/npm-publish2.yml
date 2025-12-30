@@ -111,9 +111,7 @@ jobs:
           ref: "release"
           token: ${{ secrets.GITHUB_TOKEN }}  # 使用 Personal Access Token
           fetch-depth: 0  # 获取完整历史记录
-      - uses: pnpm/action-setup@v4.2.0
-        with:
-          version: latest
+
       - uses: actions/setup-node@v6
         with:
           node-version: 24
