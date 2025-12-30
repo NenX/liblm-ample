@@ -38,11 +38,14 @@ jobs:
     runs-on: ${{ matrix.settings.host }}
     steps:
       - uses: actions/checkout@v6
-      - name: Setup node
-        uses: actions/setup-node@v6
+      - uses: pnpm/action-setup@v4.2.0
+        with:
+          version: latest
+      - uses: actions/setup-node@v6
         with:
           node-version: 24
-          cache: pnpm
+          registry-url: https://registry.npmjs.org/
+          cache: 'pnpm'
       - name: Install
         uses: dtolnay/rust-toolchain@stable
         with:
