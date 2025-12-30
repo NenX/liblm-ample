@@ -102,6 +102,7 @@ jobs:
 # 2222
 
   build:
+    needs: native-build
     runs-on: ubuntu-latest
     permissions:
       actions: write
@@ -131,7 +132,7 @@ jobs:
           path: artifacts
 
 
-      - name: List packages
+      - name: List packages after download
         run: ls -R ./packages/lm_x
         shell: bash
 
