@@ -95,8 +95,9 @@ jobs:
         with:
           name: bindings-${{ matrix.settings.target }}
           path: |
-            packages/*/${{ env.APP_NAME }}.*.node
-            packages/*/${{ env.APP_NAME }}.*.wasm
+            packages/*/npm
+            # packages/*/npm/*/${{ env.APP_NAME }}.*.node
+            # packages/*/${{ env.APP_NAME }}.*.wasm
           if-no-files-found: error
 
 # 2222
