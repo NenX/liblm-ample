@@ -4,9 +4,12 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
+    "lerna:version": "lerna version --no-push --no-git-tag-version",
     "build": "lerna run build",
+    "napi:build": "lerna run napi:build",
+    "napi:prepare": "lerna run napi:prepare",
     "lerna:clean": "lerna clean && rimraf node_modules -rf",
-    "lerna:publish": "lerna publish patch --registry=https://registry.npmjs.org/ -y",
+    "lerna:publish": "lerna publish from-package --registry=https://registry.npmjs.org/ -y",
     "release": "pnpm build && pnpm lerna:publish"
   },
   "dependencies": {},
@@ -25,5 +28,6 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "packageManager": "pnpm@10.14.0"
 }

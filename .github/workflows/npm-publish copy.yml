@@ -1,0 +1,87 @@
+# This workflow will run tests using node and then publish a package to GitHub Packages when a release is created
+# For more information see: https://docs.github.com/en/actions/publishing-packages/publishing-nodejs-packages
+
+name: copy
+env:
+  DEBUG: napi:*
+  APP_NAME: lm_x
+  MACOSX_DEPLOYMENT_TARGET: '10.13'
+  CARGO_INCREMENTAL: '1'
+on:
+  workflow_dispatch: # 添加手动触发支持
+  # push:
+  #   branches:
+  #     - release
+
+
+jobs:
+
+
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      actions: write
+      checks: write
+      contents: write
+    steps:
+
+      - uses: actions/checkout@v4
+        with:
+          ref: "release"
+          token: ${{ secrets.GITHUB_TOKEN }}  # 使用 Personal Access Token
+          fetch-depth: 0  # 获取完整历史记录
+      - uses: pnpm/action-setup@v4.2.0
+        with:
+          version: latest
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          registry-url: https://registry.npmjs.org/
+          cache: 'pnpm'
+
+      - run: pnpm install --no-frozen-lockfile
+      - run: pnpm run build
+
+      - run: git config --global user.email "noah199@qq.com"
+      - run: git config --global user.name "NenX"
+
+
+      - name: Build Auto Commit
+        uses: stefanzweifel/git-auto-commit-action@v7.1.0
+        with:
+        # Commit message
+          commit_message: "after build !!"
+        # Git branch name, where changes should be pushed too
+          branch: "release"  # 修复：使用当前分支而不是head_ref
+        # Commit options
+          commit_options: '--no-verify'
+        # Push options
+          push_options: '--force'
+
+
+
+
+
+
+      - run: pnpm lerna:publish
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+          # NPM_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+      - run: git status
+
+      - name: Git Auto Commit
+        uses: stefanzweifel/git-auto-commit-action@v7.1.0
+        with:
+        # Commit message
+          commit_message: "release !!"
+        # Git branch name, where changes should be pushed too
+          branch: "release"  # 修复：使用当前分支而不是head_ref
+        # Commit options
+          commit_options: '--no-verify'
+        # Push options
+          push_options: '--force'
+      - run: echo "release 成功！"
+
+
+
+
