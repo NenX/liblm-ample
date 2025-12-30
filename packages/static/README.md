@@ -1,31 +1,20 @@
-# yargs-parser +3+
+
+# `@lm_fe/static` +4+
 
 
 
-The mighty option parser used by.
+> lm_fe 静态资源
+
+# 使用
 
 
 
 
-## Example
+## 安装
 
-```sh
-npm i yargs-parser --save
+```bash
+npm install @lm_fe/lm_x
 ```
 
+## 能力
 
-**Node.js:**
-
-```js
-import parser from 'yargs-parser'
-
-const argv = parser('--foo=99 --bar=9987930', {
-  string: ['bar']
-})
-console.log(argv)
-```
-
-
-## License
-
-ISC

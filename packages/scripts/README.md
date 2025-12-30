@@ -1,31 +1,22 @@
-# yargs-parser +2+
+# `@lm_fe/scripts` +4+
 
 
 
-The mighty option parser used by.
+> lm_fe 使用脚本
+
+# 使用
 
 
-
-
-## Example
-
-```sh
-npm i yargs-parser --save
+```bash
+npx copy-static
 ```
 
+## 安装
 
-**Node.js:**
-
-```js
-import parser from 'yargs-parser'
-
-const argv = parser('--foo=99 --bar=9987930', {
-  string: ['bar']
-})
-console.log(argv)
+```bash
+npm install @lm_fe/scripts
 ```
 
+## 能力
 
-## License
 
-ISC

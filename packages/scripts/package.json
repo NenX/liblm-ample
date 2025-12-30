@@ -13,8 +13,7 @@
         "gen-routes": "dist/gen-routes.js",
         "gen-form-config": "dist/gen-form-config.js",
         "copy-static": "dist/copy-static.js",
-        "color-log": "dist/color-log.js",
-        "lm-cli": "dist/cli.js"
+        "color-log": "dist/color-log.js"
     },
     "main": "dist/index.js",
     "directories": {

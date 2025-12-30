@@ -22,6 +22,9 @@
     "index.js",
     "browser.js"
   ],
+  "bin": {
+    "lm_x": "bin/lm_x.js"
+  },
   "napi": {
     "binaryName": "lm_x",
     "targets": [
