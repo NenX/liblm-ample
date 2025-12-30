@@ -16,7 +16,7 @@ on:
 
 jobs:
 
-# 1111
+# native-build
   native-build:
     strategy:
       fail-fast: false
@@ -35,6 +35,7 @@ jobs:
             target: aarch64-apple-darwin
             buildArgs: --target aarch64-apple-darwin
     name: stable - ${{ matrix.settings.target }} - node@24
+    if: "startsWith(github.event.head_commit.message, 'chore(release): publish')"
     runs-on: ${{ matrix.settings.host }}
     steps:
       - uses: actions/checkout@v6
@@ -98,10 +99,11 @@ jobs:
             # packages/*/${{ env.APP_NAME }}.*.wasm
           if-no-files-found: error
 
-# 2222
+# native-build
 
   publish:
     name: Publish
+    if: "startsWith(github.event.head_commit.message, 'chore(release): publish')"
     needs: native-build
     runs-on: ubuntu-latest
     permissions:
