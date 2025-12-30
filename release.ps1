@@ -1,7 +1,8 @@
 
 git checkout release
 git pull
-git merge main -m "chore(release): publish"
+git merge main
+git push
 git checkout main
-git merge checkout
+git merge release
 git push
