@@ -95,7 +95,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v6
         with:
-          # name: bindings-${{ matrix.settings.target }}
+          name: bindings-${{ matrix.settings.target }}
           path: |
             packages/*/npm/*/${{ env.APP_NAME }}.*.wasm
             packages/*/npm/*/${{ env.APP_NAME }}.*.node
