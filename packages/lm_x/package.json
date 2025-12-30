@@ -20,7 +20,8 @@
   "files": [
     "index.d.ts",
     "index.js",
-    "browser.js"
+    "browser.js",
+    "bin"
   ],
   "bin": {
     "lm_x": "bin/lm_x.js"

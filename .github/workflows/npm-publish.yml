@@ -9,14 +9,14 @@ env:
   CARGO_INCREMENTAL: '1'
 on:
   workflow_dispatch: # 添加手动触发支持
-  # push:
-  #   branches:
-  #     - release
+  push:
+    branches:
+      - release
 
 
 jobs:
 
-# 1111
+# native-build
   native-build:
     strategy:
       fail-fast: false
@@ -34,18 +34,19 @@ jobs:
           - host: macos-latest
             target: aarch64-apple-darwin
             buildArgs: --target aarch64-apple-darwin
-    name: stable - ${{ matrix.settings.target }} - node@22
+    name: stable - ${{ matrix.settings.target }} - node@24
+    if: "startsWith(github.event.head_commit.message, 'chore(release): publish')"
     runs-on: ${{ matrix.settings.host }}
     steps:
       - uses: actions/checkout@v6
       - uses: pnpm/action-setup@v4.2.0
         with:
           version: latest
-      - name: Setup node
-        uses: actions/setup-node@v6
+      - uses: actions/setup-node@v6
         with:
           node-version: 24
-
+          registry-url: https://registry.npmjs.org/
+          cache: 'pnpm'
       - name: Install
         uses: dtolnay/rust-toolchain@stable
         with:
@@ -77,26 +78,33 @@ jobs:
         if: ${{ matrix.settings.setup }}
         shell: bash
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm install --no-frozen-lockfile
 
       - name: Version
         run: pnpm lerna:version
         shell: bash
       - name: Build
-        run: pnpm lerna:build -- ${{ matrix.settings.buildArgs }}
+        run: pnpm napi:build -- ${{ matrix.settings.buildArgs }}
         shell: bash
+
+
       - name: Upload artifact
         uses: actions/upload-artifact@v6
         with:
           name: bindings-${{ matrix.settings.target }}
           path: |
-            packages/*/${{ env.APP_NAME }}.*.node
             packages/*/${{ env.APP_NAME }}.*.wasm
+            packages/*/${{ env.APP_NAME }}.*.node
+            # packages/*/${{ env.APP_NAME }}.*.node
+            # packages/*/${{ env.APP_NAME }}.*.wasm
           if-no-files-found: error
 
-# 2222
+# native-build
 
-  build:
+  publish:
+    name: Publish
+    if: "startsWith(github.event.head_commit.message, 'chore(release): publish')"
+    needs: native-build
     runs-on: ubuntu-latest
     permissions:
       actions: write
@@ -116,8 +124,32 @@ jobs:
         with:
           node-version: 24
           registry-url: https://registry.npmjs.org/
+          cache: 'pnpm'
+      - name: Install dependencies
+        run: pnpm install --no-frozen-lockfile
 
-      - run: pnpm install --no-frozen-lockfile
+      - name: Version
+        run: pnpm lerna:version
+        shell: bash
+
+      - name: Download all artifacts
+        uses: actions/download-artifact@v7
+        with:
+          path: artifacts
+
+      - name: createNpmDirs
+        run: pnpm napi:createNpmDirs
+        shell: bash
+
+      - name: artifacts
+        run: pnpm napi:artifacts
+        shell: bash
+
+      - name: List packages after download
+        run: ls -R ./packages/*/npm
+        shell: bash
+
+
       - run: pnpm run build
 
 
@@ -129,18 +161,10 @@ jobs:
       - name: Build Auto Commit
         uses: stefanzweifel/git-auto-commit-action@v7.1.0
         with:
-        # Commit message
           commit_message: "after build !!"
-        # Git branch name, where changes should be pushed too
           branch: "release"  # 修复：使用当前分支而不是head_ref
-        # Commit options
           commit_options: '--no-verify'
-        # Push options
           push_options: '--force'
-
-
-
-
 
 
       - run: pnpm lerna:publish
@@ -160,6 +184,8 @@ jobs:
         # Push options
           push_options: '--force'
       - run: echo "release 成功！"
+
+
 
 
 
