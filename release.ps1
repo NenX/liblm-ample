@@ -1,9 +1,7 @@
-git pull
-git add .
-git commit -m 'chore(release): publish'
+
 git checkout release
 git pull
-git merge main
+git merge main -m 'chore(release): publish'
 git checkout main
 git merge checkout
 git push
