@@ -7,7 +7,8 @@
     "lerna:version": "lerna version patch --yes --no-push --no-git-tag-version",
     "build": "lerna run build",
     "napi:build": "lerna run napi:build",
-    "napi:prepare": "lerna run napi:prepare",
+    "napi:artifacts": "lerna run napi:artifacts",
+    "napi:createNpmDirs": "lerna run napi:createNpmDirs",
     "lerna:clean": "lerna clean && rimraf node_modules -rf",
     "lerna:publish": "lerna publish from-package --registry=https://registry.npmjs.org/ -y",
     "release": "pnpm build && pnpm lerna:publish"

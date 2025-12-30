@@ -85,12 +85,7 @@ jobs:
       - name: Build
         run: pnpm napi:build -- ${{ matrix.settings.buildArgs }}
         shell: bash
-      - name: Napi prepare
-        run: pnpm napi:prepare
-        shell: bash
-      - name: List packages
-        run: ls -R ./packages/lm_x/npm
-        shell: bash
+
 
       - name: Upload artifact
         uses: actions/upload-artifact@v6
@@ -135,13 +130,16 @@ jobs:
         with:
           path: artifacts
 
-
-      - name: List packages after download
-        run: ls -R ./packages/lm_x
+      - name: createNpmDirs
+        run: pnpm napi:createNpmDirs
         shell: bash
 
-      - name: List artifacts after download
-        run: ls -R ./artifacts
+      - name: artifacts
+        run: pnpm napi:artifacts
+        shell: bash
+
+      - name: List packages after download
+        run: ls -R ./packages/*/npm
         shell: bash
 
       - run: echo "release 成功！"
