@@ -83,11 +83,11 @@ jobs:
         run: pnpm lerna:version
         shell: bash
       - name: Build
-        run: pnpm lerna:build -- ${{ matrix.settings.buildArgs }}
+        run: pnpm napi:build -- ${{ matrix.settings.buildArgs }}
         shell: bash
 
       - name: List packages
-        run: ls -R ./packages
+        run: ls -R ./packages/lm_x
         shell: bash
 
       - name: Upload artifact
@@ -132,12 +132,12 @@ jobs:
 
 
       - name: List packages
-        run: ls -R ./packages
+        run: ls -R ./packages/lm_x
         shell: bash
 
-      - name: List artifacts
-        run: ls -R ./artifacts
-        shell: bash
+      # - name: List artifacts
+      #   run: ls -R ./artifacts
+      #   shell: bash
 
       - run: echo "release 成功！"
 
