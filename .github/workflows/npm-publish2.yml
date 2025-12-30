@@ -85,7 +85,9 @@ jobs:
       - name: Build
         run: pnpm napi:build -- ${{ matrix.settings.buildArgs }}
         shell: bash
-
+      - name: Napi prepare
+        run: pnpm napi:prepare
+        shell: bash
       - name: List packages
         run: ls -R ./packages/lm_x
         shell: bash
