@@ -24,7 +24,8 @@
     "bin"
   ],
   "bin": {
-    "lm_x": "bin/lm_x.js"
+    "lm_x": "bin/lm_x.js",
+    "lm_p": "bin/lm_p.js"
   },
   "napi": {
     "binaryName": "lm_x",
