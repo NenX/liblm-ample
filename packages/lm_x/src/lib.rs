@@ -1,7 +1,7 @@
 #![deny(clippy::all)]
-mod command;
 
-use std::env::args;
+mod client;
+mod util;
 
 use napi_derive::napi;
 
@@ -11,6 +11,10 @@ pub fn plus_100(input: u32) -> u32 {
 }
 
 #[napi]
-pub fn hello(name: Vec<String>) {
-  command::tt(name);
+pub async fn cli(args: Vec<String>) -> client::cli::A {
+  client::cli::handle(args).await.unwrap()
+}
+#[napi]
+pub async fn prompt() {
+  client::prompter::handle().await.unwrap()
 }
