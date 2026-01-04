@@ -30,11 +30,8 @@ pub async fn run_command(cmd_str: &str) -> MyResult<String> {
   }
 }
 pub async fn run_command_spawn(cmd_str: &str) -> std::io::Result<Child> {
-  let c = platform_cmd(cmd_str)
-    .stdin(std::process::Stdio::piped())
-    .stdout(std::process::Stdio::inherit())
-    .stderr(std::process::Stdio::inherit())
-    .spawn()?;
+  let c = platform_cmd(cmd_str);
+  let c = config_cmd_io(c).spawn()?;
 
   Ok(c)
 }
@@ -43,14 +40,21 @@ pub async fn run_command_spawn_envs(
   cmd_str: &str,
   vars: impl IntoIterator<Item = (&str, &str)>,
 ) -> std::io::Result<Child> {
-  let c = platform_cmd(cmd_str)
-    .envs(vars)
-    .stdin(std::process::Stdio::piped())
-    .stdout(std::process::Stdio::inherit())
-    .stderr(std::process::Stdio::inherit())
-    .spawn()?;
+  let c = platform_cmd(cmd_str);
+  let c = config_cmd_io(c).envs(vars).spawn()?;
 
   Ok(c)
+}
+fn config_cmd_io(mut cmd: Command) -> Command {
+  cmd
+    .stdin(std::process::Stdio::piped())
+    // napi 在 linux 下 child process stdout inherit 有问题
+    // .stdout(std::process::Stdio::inherit())
+    // .stderr(std::process::Stdio::inherit());
+    .stdout(std::io::stdout())
+    .stderr(std::io::stderr());
+
+  cmd
 }
 
 #[tokio::test]
