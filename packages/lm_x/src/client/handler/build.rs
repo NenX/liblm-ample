@@ -6,7 +6,7 @@ use tokio::{fs, time::Instant};
 
 use crate::util::{
   CheckVersion, MyResult, dot_env_to_map_new, format_date_time_underscore, run_command,
-  run_command_spawn_envs,
+  run_command_spawn, run_command_spawn_envs,
 };
 
 const PACK_DIR: &str = "lm_packet";
@@ -48,18 +48,23 @@ pub async fn do_build() -> MyResult<()> {
 }
 
 pub async fn compress_dist(name: &Path) -> MyResult<()> {
-  let dir_path = Path::new(PACK_DIR);
-  if !dir_path.is_dir() {
-    fs::create_dir_all(PACK_DIR).await?;
-  }
-
-  let tar_gz = std::fs::File::create(name)?;
-  let enc = GzEncoder::new(tar_gz, Compression::default());
-  let mut tar = tar::Builder::new(enc);
-  tar.append_dir_all(".", "dist")?;
-  tar.finish()?;
   if cfg!(windows) {
+    let dir_path = Path::new(PACK_DIR);
+    if !dir_path.is_dir() {
+      fs::create_dir_all(PACK_DIR).await?;
+    }
+
+    let tar_gz = std::fs::File::create(name)?;
+    let enc = GzEncoder::new(tar_gz, Compression::default());
+    let mut tar = tar::Builder::new(enc);
+    tar.append_dir_all(".", "dist")?;
+    tar.finish()?;
     let _ = run_command(&format!("explorer {}", PACK_DIR)).await;
+  } else {
+    let cmd = &format!("tar -czvf -C dist {}", name.to_str().unwrap());
+    println!("compress cmd {}", cmd);
+    let mut c = run_command_spawn(&format!("tar -czvf -C dist {}", cmd)).await?;
+    c.wait().await?;
   }
   Ok(())
 }
