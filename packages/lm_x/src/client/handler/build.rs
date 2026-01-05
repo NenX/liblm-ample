@@ -54,7 +54,7 @@ pub async fn compress_dist(name: &Path) -> MyResult<()> {
   }
 
   let tar_gz = std::fs::File::create(name)?;
-  let enc = GzEncoder::new(tar_gz, Compression::fast());
+  let enc = GzEncoder::new(tar_gz, Compression::default());
   let mut tar = tar::Builder::new(enc);
   tar.append_dir_all(".", "dist")?;
   tar.finish()?;
