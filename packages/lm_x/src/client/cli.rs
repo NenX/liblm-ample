@@ -20,7 +20,8 @@ pub async fn handle(args: Vec<String>) -> MyResult<A> {
     SubCmd::Install(arg) => {
       println!("arg: Install port {}", arg.port);
     }
-    SubCmd::Build =>  do_build().await?,
+    SubCmd::Build =>  do_build(false).await?,
+    SubCmd::Build2 =>  do_build(true).await?,
     SubCmd::Start => do_start().await?,
     SubCmd::DoctorRm => doctor_rm_deps().await?,
     SubCmd::Doctor => doctor_check().await?,

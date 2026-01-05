@@ -32,23 +32,27 @@ impl CheckVersion {
     self.n = f.trim().parse::<u32>()?;
     Ok(self)
   }
-  pub async fn write(&self) -> MyResult<()> {
+  pub async fn write_to(&self) -> MyResult<()> {
     let dst_path: &Path = self.dst_dir.as_ref();
-    let src_path: &Path = self.src_dir.as_ref();
     let dst = dst_path.join(FILE_NAME);
-    let src = src_path.join(FILE_NAME);
 
     if !dst_path.exists() {
       fs::create_dir_all(&dst_path).await?;
     }
 
     fs::write(dst, self.n.to_string()).await?;
-    fs::write(src, self.n.to_string()).await?;
 
     Ok(())
   }
-  pub fn next(&mut self) -> u32 {
+  pub async fn write(&self) -> MyResult<&Self> {
+    let src_path: &Path = self.src_dir.as_ref();
+    let src = src_path.join(FILE_NAME);
+    fs::write(src, self.n.to_string()).await?;
+    Ok(self)
+  }
+  pub async fn write_next(&mut self) -> MyResult<&mut Self> {
     self.n += 1;
-    self.n
+    self.write().await?;
+    Ok(self)
   }
 }
