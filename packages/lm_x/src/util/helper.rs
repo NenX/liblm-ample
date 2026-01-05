@@ -1,19 +1,18 @@
 use std::collections::HashMap;
 
 use chrono::Local;
-use tokio::{fs, process};
 
-use crate::util::{error::MyResult, process_command_output, run_command, run_command_spawn};
+use crate::util::{error::MyResult, run_command};
 
 pub fn format_date_time() -> String {
   let now = Local::now();
-  let s = now.format("%Y-%m-%d %H:%M:%S").to_string();
-  s
+  
+  now.format("%Y-%m-%d %H:%M:%S").to_string()
 }
 pub fn format_date_time_underscore() -> String {
   let now = Local::now();
-  let s = now.format("%y_%m%d_%H%M").to_string();
-  s
+  
+  now.format("%y_%m%d_%H%M").to_string()
 }
 
 pub async fn dot_env_to_map() -> MyResult<HashMap<String, String>> {
@@ -53,7 +52,7 @@ pub async fn dot_env_to_map() -> MyResult<HashMap<String, String>> {
 }
 
 pub async fn dot_env_to_map_new() -> MyResult<HashMap<String, String>> {
-  let code = format!("node -e console.log(JSON.stringify(require('./env.js')))");
+  let code = "node -e console.log(JSON.stringify(require('./env.js')))".to_string();
   let json_str = run_command(&code).await?;
   let map: HashMap<String, String> = serde_json::from_str(&json_str)?;
 

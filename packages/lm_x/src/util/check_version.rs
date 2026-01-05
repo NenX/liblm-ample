@@ -2,7 +2,7 @@ use std::path::Path;
 
 use tokio::fs;
 
-use crate::util::error::{MyError, MyResult};
+use crate::util::error::MyResult;
 const FILE_NAME: &str = "check_version";
 
 pub struct CheckVersion {

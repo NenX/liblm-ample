@@ -14,7 +14,7 @@ pub async fn handle() -> MyResult<()> {
   let mut prompter = Select::new("请你选择", SubCmd::to_vec());
   prompter.help_message = Some("提示：使用👆/👇箭头导航，输入文字过滤，按回车键选择。");
   let Ok(project) = prompter.prompt() else {
-    println!("");
+    println!();
     process::exit(0)
   };
 

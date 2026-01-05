@@ -1,14 +1,14 @@
 use flate2::{Compression, write::GzEncoder};
 use fs_extra::dir::CopyOptions;
 
-use std::{path::Path, time::Duration};
+use std::path::Path;
 use tokio::{
   fs,
-  time::{Instant, sleep},
+  time::Instant,
 };
 
 use crate::util::{
-  CheckVersion, MyResult, dot_env_to_map, dot_env_to_map_new, format_date_time_underscore,
+  CheckVersion, MyResult, dot_env_to_map_new, format_date_time_underscore,
   run_command, run_command_spawn_envs,
 };
 

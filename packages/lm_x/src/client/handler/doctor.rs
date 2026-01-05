@@ -17,14 +17,14 @@ pub async fn doctor_check() -> MyResult<()> {
     && yes
   {
     let mut deps = String::from("pnpm -g install");
-    if !pnpm_status.is_ok() {
+    if pnpm_status.is_err() {
       let mut child = run_command_spawn("npm install -g pnpm").await?;
       child.wait().await?;
     }
-    if !pm2_status.is_ok() {
+    if pm2_status.is_err() {
       deps.push_str(" pm2");
     }
-    if !rspack_status.is_ok() {
+    if rspack_status.is_err() {
       deps.push_str(" @rspack/cli@1.6.8 @rspack/core@1.6.8 @rspack/plugin-react-refresh@1.5.1");
     }
 
