@@ -10,6 +10,8 @@ pub enum MyError {
   #[error("data store disconnected")]
   NumParse(#[from] ParseIntError),
   #[error("the data for key `{0}` is not available")]
+  JSONParse(#[from] serde_json::Error),
+  #[error("the data for key `{0}` is not available")]
   Msg(String),
   #[error("invalid header (expected {expected:?}, found {found:?})")]
   InvalidHeader { expected: String, found: String },

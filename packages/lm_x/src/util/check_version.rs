@@ -2,32 +2,48 @@ use std::path::Path;
 
 use tokio::fs;
 
-use crate::util::error::{MyError, MyResult};
+use crate::util::error::MyResult;
+const FILE_NAME: &str = "check_version";
 
-pub struct CheckVersion<'a> {
+pub struct CheckVersion {
   pub n: u32,
-  pub path: &'a Path,
+  src_dir: String,
+  dst_dir: String,
 }
-
-impl<'a> CheckVersion<'a> {
-  pub async fn from_file<T: AsRef<Path> + ?Sized>(file: &'a T) -> MyResult<Self> {
-    let file = file.as_ref();
+impl CheckVersion {
+  pub async fn new(src: &str, dst: &str) -> Self {
+    let mut s = Self {
+      n: 0,
+      src_dir: src.to_string(),
+      dst_dir: dst.to_string(),
+    };
+    s.read().await.expect("read version");
+    s
+  }
+  async fn read(&mut self) -> MyResult<&Self> {
+    let file: &Path = self.src_dir.as_ref();
+    let file = file.join(FILE_NAME);
     if !file.exists() {
-      fs::write(file, "0").await?;
+      fs::write(&file, "0").await?;
+      return Ok(self);
     }
 
     let f = fs::read_to_string(file).await?;
-    let n = f.trim().parse::<u32>()?;
-    Ok(Self { n, path: file })
+    self.n = f.trim().parse::<u32>()?;
+    Ok(self)
   }
-  pub async fn to_file<T: AsRef<Path> + ?Sized>(&self, target: &T) -> MyResult<()> {
-    let target = target.as_ref();
-    fs::write(self.path, self.n.to_string()).await?;
-    if !target.exists() {
-      fs::create_dir_all(target).await?;
+  pub async fn write(&self) -> MyResult<()> {
+    let dst_path: &Path = self.dst_dir.as_ref();
+    let src_path: &Path = self.src_dir.as_ref();
+    let dst = dst_path.join(FILE_NAME);
+    let src = src_path.join(FILE_NAME);
+
+    if !dst_path.exists() {
+      fs::create_dir_all(&dst_path).await?;
     }
-    fs::write(target.join(self.path), self.n.to_string())
-      .await?;
+
+    fs::write(dst, self.n.to_string()).await?;
+    fs::write(src, self.n.to_string()).await?;
 
     Ok(())
   }
