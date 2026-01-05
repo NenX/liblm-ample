@@ -5,7 +5,7 @@ use inquire::{MultiSelect, Select};
 use crate::{
   client::{
     argment::SubCmd,
-    handler::{doctor_check, doctor_rm_deps},
+    handler::{do_build, do_start, doctor_check, doctor_rm_deps},
   },
   util::MyResult,
 };
@@ -25,8 +25,8 @@ pub async fn handle() -> MyResult<()> {
         .expect("不会了");
       println!("你选择了：{}, port {:?}", project, a);
     }
-    SubCmd::Build => println!("你选择了：{}", project),
-    SubCmd::Start => println!("你选择了：{}", project),
+    SubCmd::Build => do_build().await?,
+    SubCmd::Start => do_start().await?,
     SubCmd::DoctorRm => doctor_rm_deps().await?,
     SubCmd::Doctor => doctor_check().await?,
   };

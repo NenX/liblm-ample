@@ -19,6 +19,7 @@ export function client_macro_record(x: { [x: string]: any } = {}, raw = true) {
     const devMode = ENVIRONMENT_MODE === 'development';
     const ips = Object.values(networkInterfaces()).flat().filter(ent => ent?.family === 'IPv4').map(ent => ent?.address)
     let m = {
+        ...other_record,
         sb:'http://192.are.you.sb?',
         appName: APP_NAME,
         devMode,
@@ -34,7 +35,6 @@ export function client_macro_record(x: { [x: string]: any } = {}, raw = true) {
     }
     const ret = {
         ...x,
-        ...other_record,
         __DEV__: devMode,
         __LOCAL__: `(${JSON.stringify(ips)}.includes(location.hostname))`,
         APP_MACRO: raw ? JSON.stringify(m) : m,

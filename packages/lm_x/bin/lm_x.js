@@ -1,3 +1,8 @@
 const x = require('@lm_fe/lm_x')
-x.cli(process.argv.slice(1)).then(x => console.log({ x }))
+// process.env.RUST_BACKTRACE = "1"
+if (process.argv.length > 2) {
+  x.cli(process.argv.slice(1)).then(x => console.log({ x }))
+} else {
+  x.prompt()
+}
 

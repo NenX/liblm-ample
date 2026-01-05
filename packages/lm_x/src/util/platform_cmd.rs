@@ -1,4 +1,4 @@
-use std::ffi::OsStr;
+use std::{ffi::OsStr, process::Output};
 
 use tokio::process::{Child, Command};
 
@@ -19,6 +19,9 @@ pub fn platform_cmd<S: AsRef<OsStr>>(cmd: S) -> Command {
 pub async fn run_command(cmd_str: &str) -> MyResult<String> {
   let output = platform_cmd(cmd_str).output().await?;
 
+  process_command_output(output)
+}
+pub fn process_command_output(output: Output) -> MyResult<String> {
   if output.status.success() {
     let out = output.stdout;
     let output_str = String::from_utf8_lossy(&out);

@@ -44,9 +44,9 @@ impl SubCmd {
 impl Display for SubCmd {
   fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
     match self {
-      SubCmd::Install(_) => write!(f, "?? Install"),
-      SubCmd::Build => write!(f, "?? Build"),
-      SubCmd::Start => write!(f, "?? Start"),
+      SubCmd::Install(_) => write!(f, "install"),
+      SubCmd::Build => write!(f, "build"),
+      SubCmd::Start => write!(f, "start"),
       SubCmd::DoctorRm => write!(f, "移除环境依赖"),
       SubCmd::Doctor => write!(f, "环境检测"),
     }
