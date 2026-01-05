@@ -25,7 +25,8 @@ pub async fn handle() -> MyResult<()> {
         .expect("不会了");
       println!("你选择了：{}, port {:?}", project, a);
     }
-    SubCmd::Build => do_build().await?,
+    SubCmd::Build => do_build(false).await?,
+    SubCmd::Build2 => do_build(true).await?,
     SubCmd::Start => do_start().await?,
     SubCmd::DoctorRm => doctor_rm_deps().await?,
     SubCmd::Doctor => doctor_check().await?,

@@ -12,7 +12,7 @@ use crate::util::{
 const PACK_DIR: &str = "lm_packet";
 const LATEST_PACK: &str = "latest";
 
-pub async fn do_build() -> MyResult<()> {
+pub async fn do_build(test: bool) -> MyResult<()> {
   let mut env_m = dot_env_to_map_new().await?;
   let mut check_v = CheckVersion::new("public", "dist").await;
 
@@ -37,40 +37,44 @@ pub async fn do_build() -> MyResult<()> {
   if !build_task.wait().await?.success() {
     return Err("haha".into());
   }
+  let start = Instant::now();
+  println!("开始复制");
   mov_the_fucking_things().expect("Failed to move files");
+  println!("复制成功！耗时 {:?}", start.elapsed());
+
   check_v.write_to().await?;
 
-  compress_dist(&Path::new(PACK_DIR).join(&gz_path)).await?;
+  compress_dist(&Path::new(PACK_DIR).join(&gz_path), test).await?;
   fs::write(Path::new(PACK_DIR).join(LATEST_PACK), gz_path).await?;
   println!("操作成功！耗时 {:?}", start.elapsed());
 
   Ok(())
 }
 
-pub async fn compress_dist(name: &Path) -> MyResult<()> {
-  if cfg!(windows) {
-    let dir_path = Path::new(PACK_DIR);
-    if !dir_path.is_dir() {
-      fs::create_dir_all(PACK_DIR).await?;
-    }
+pub async fn compress_dist(name: &Path, test: bool) -> MyResult<()> {
+  let dir_path = Path::new(PACK_DIR);
+  if !dir_path.is_dir() {
+    fs::create_dir_all(PACK_DIR).await?;
+  }
 
+  if cfg!(windows) || test {
     let tar_gz = std::fs::File::create(name)?;
     let enc = GzEncoder::new(tar_gz, Compression::default());
     let mut tar = tar::Builder::new(enc);
     tar.append_dir_all(".", "dist")?;
     tar.finish()?;
-    let _ = run_command(&format!("explorer {}", PACK_DIR)).await;
+    // let _ = run_command(&format!("explorer {}", PACK_DIR)).await;
   } else {
-    let cmd = &format!("tar -czvf -C dist {}", name.to_str().unwrap());
+    let cmd = &format!("cd dist && tar -czf ../{} ./*", name.to_str().unwrap());
     println!("compress cmd {}", cmd);
-    let mut c = run_command_spawn(&format!("tar -czvf -C dist {}", cmd)).await?;
+    let mut c = run_command_spawn(cmd).await?;
     c.wait().await?;
   }
   Ok(())
 }
 fn mov_the_fucking_things() -> fs_extra::error::Result<()> {
   let mut options = CopyOptions::new();
-  options.overwrite = true;
+  // options.overwrite = true;
   options.content_only = true;
   options.skip_exist = true;
   // let from_paths = vec![
