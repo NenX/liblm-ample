@@ -39,7 +39,7 @@ pub async fn do_build(test: bool) -> MyResult<()> {
   }
   let start = Instant::now();
   println!("开始复制");
-  mov_the_fucking_things().expect("Failed to move files");
+  mov_the_fucking_things_new().await?;
   println!("复制成功！耗时 {:?}", start.elapsed());
 
   check_v.write_to().await?;
@@ -57,19 +57,25 @@ pub async fn compress_dist(name: &Path, test: bool) -> MyResult<()> {
     fs::create_dir_all(PACK_DIR).await?;
   }
 
-  if cfg!(windows) || test {
-    let tar_gz = std::fs::File::create(name)?;
-    let enc = GzEncoder::new(tar_gz, Compression::default());
-    let mut tar = tar::Builder::new(enc);
-    tar.append_dir_all(".", "dist")?;
-    tar.finish()?;
-    // let _ = run_command(&format!("explorer {}", PACK_DIR)).await;
-  } else {
-    let cmd = &format!("cd dist && tar -czf ../{} ./*", name.to_str().unwrap());
-    println!("compress cmd {}", cmd);
-    let mut c = run_command_spawn(cmd).await?;
-    c.wait().await?;
-  }
+  let cmd = &format!("cd dist && tar -czf ../{} ./*", name.to_str().unwrap());
+  println!("cmd => {}", cmd);
+
+  let mut c = run_command_spawn(cmd).await?;
+  c.wait().await?;
+
+  // if cfg!(windows) || test {
+  //   let tar_gz = std::fs::File::create(name)?;
+  //   let enc = GzEncoder::new(tar_gz, Compression::default());
+  //   let mut tar = tar::Builder::new(enc);
+  //   tar.append_dir_all(".", "dist")?;
+  //   tar.finish()?;
+  //   // let _ = run_command(&format!("explorer {}", PACK_DIR)).await;
+  // } else {
+  //   let cmd = &format!("cd dist && tar -czf ../{} ./*", name.to_str().unwrap());
+  //   println!("compress cmd {}", cmd);
+  //   let mut c = run_command_spawn(cmd).await?;
+  //   c.wait().await?;
+  // }
   Ok(())
 }
 fn mov_the_fucking_things() -> fs_extra::error::Result<()> {
@@ -82,6 +88,23 @@ fn mov_the_fucking_things() -> fs_extra::error::Result<()> {
   // ];
   // fs_extra::copy_items(&from_paths, target, &options)?;
   fs_extra::dir::copy("public", "dist", &options)?;
+
+  Ok(())
+}
+async fn mov_the_fucking_things_new() -> MyResult<()> {
+  let public_tar_name = "public.tar.gz";
+  let public_tar_path = Path::new(public_tar_name);
+  if !public_tar_path.exists() {
+    let cmd = &format!("cd public && tar -czf ../{} ./*", public_tar_name);
+    println!("cmd => {}", cmd);
+    let mut c = run_command_spawn(cmd).await?;
+    c.wait().await?;
+  }
+  let cmd = &format!("tar -xzf {} -C dist", public_tar_name);
+  println!("cmd => {}", cmd);
+
+  let mut c = run_command_spawn(cmd).await?;
+  c.wait().await?;
 
   Ok(())
 }
