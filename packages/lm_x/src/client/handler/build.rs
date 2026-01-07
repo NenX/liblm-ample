@@ -38,9 +38,7 @@ pub async fn do_build(test: bool) -> MyResult<()> {
     return Err("haha".into());
   }
   let start = Instant::now();
-  println!("开始复制");
   mov_the_fucking_things_new().await?;
-  println!("复制成功！耗时 {:?}", start.elapsed());
 
   check_v.write_to().await?;
 
@@ -58,7 +56,6 @@ pub async fn compress_dist(name: &Path, test: bool) -> MyResult<()> {
   }
 
   let cmd = &format!("cd dist && tar -czf ../{} ./*", name.to_str().unwrap());
-  println!("cmd => {}", cmd);
 
   let mut c = run_command_spawn(cmd).await?;
   c.wait().await?;
@@ -96,12 +93,11 @@ async fn mov_the_fucking_things_new() -> MyResult<()> {
   let public_tar_path = Path::new(public_tar_name);
   if !public_tar_path.exists() {
     let cmd = &format!("cd public && tar -czf ../{} ./*", public_tar_name);
-    println!("cmd => {}", cmd);
+
     let mut c = run_command_spawn(cmd).await?;
     c.wait().await?;
   }
   let cmd = &format!("tar -xzf {} -C dist", public_tar_name);
-  println!("cmd => {}", cmd);
 
   let mut c = run_command_spawn(cmd).await?;
   c.wait().await?;
