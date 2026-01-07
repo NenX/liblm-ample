@@ -23,7 +23,6 @@ pub enum SubCmd {
   Install(InstallArgs),
   /// 打包本地项目并压缩
   Build,
-  Build2,
   Start,
   /// 取颜色
   DoctorRm,
@@ -36,7 +35,6 @@ impl SubCmd {
     vec![
       SubCmd::Start,
       SubCmd::Build,
-      SubCmd::Build2,
       SubCmd::Install(InstallArgs::default()),
       SubCmd::Doctor,
       SubCmd::DoctorRm,
@@ -48,7 +46,6 @@ impl Display for SubCmd {
     match self {
       SubCmd::Install(_) => write!(f, "install"),
       SubCmd::Build => write!(f, "build"),
-      SubCmd::Build2 => write!(f, "build2"),
       SubCmd::Start => write!(f, "start"),
       SubCmd::DoctorRm => write!(f, "移除环境依赖"),
       SubCmd::Doctor => write!(f, "环境检测"),

@@ -12,7 +12,7 @@ use crate::util::{
 const PACK_DIR: &str = "lm_packet";
 const LATEST_PACK: &str = "latest";
 
-pub async fn do_build(test: bool) -> MyResult<()> {
+pub async fn do_build() -> MyResult<()> {
   let mut env_m = dot_env_to_map_new().await?;
   let mut check_v = CheckVersion::new("public", "dist").await;
 
@@ -37,19 +37,18 @@ pub async fn do_build(test: bool) -> MyResult<()> {
   if !build_task.wait().await?.success() {
     return Err("haha".into());
   }
-  let start = Instant::now();
   mov_the_fucking_things_new().await?;
 
   check_v.write_to().await?;
 
-  compress_dist(&Path::new(PACK_DIR).join(&gz_path), test).await?;
+  compress_dist(&Path::new(PACK_DIR).join(&gz_path)).await?;
   fs::write(Path::new(PACK_DIR).join(LATEST_PACK), gz_path).await?;
   println!("操作成功！耗时 {:?}", start.elapsed());
 
   Ok(())
 }
 
-pub async fn compress_dist(name: &Path, test: bool) -> MyResult<()> {
+pub async fn compress_dist(name: &Path) -> MyResult<()> {
   let dir_path = Path::new(PACK_DIR);
   if !dir_path.is_dir() {
     fs::create_dir_all(PACK_DIR).await?;
