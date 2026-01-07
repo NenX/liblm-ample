@@ -3,11 +3,12 @@
   "version": "0.1.215",
   "description": "",
   "scripts": {
-    "build": "node ./write_meta.js && rollup -c rollup.config.js"
+    "build": "node ./write_meta.js && rollup -c rollup.config.js",
+    "gz": "cd asserts && tar -czvf all.tar.gz ./*"
   },
   "main": "dist/index.js",
   "files": [
-    "asserts",
+    "all.tar.gz",
     "dist"
   ],
   "publishConfig": {
