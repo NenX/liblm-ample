@@ -8,7 +8,7 @@
   },
   "main": "dist/index.js",
   "files": [
-    "asserts",
+    "all.tar.gz",
     "dist"
   ],
   "publishConfig": {
