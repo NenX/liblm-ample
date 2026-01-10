@@ -5,7 +5,7 @@ use tokio::io;
 
 #[derive(Error, Debug)]
 pub enum MyError {
-  #[error("data store disconnected")]
+  #[error("发生 Io 错误")]
   Io(#[from] io::Error),
   #[error("data store disconnected")]
   NumParse(#[from] ParseIntError),
