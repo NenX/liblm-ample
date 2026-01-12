@@ -5,7 +5,7 @@ use std::path::Path;
 use tokio::{fs, time::Instant};
 
 use crate::util::{
-  CheckVersion, MyResult, dot_env_to_map_new, format_date_time_underscore, run_command,
+  CheckVersion, MyResult, dot_env_to_map_new, format_date_time_underscore, pre_work, run_command,
   run_command_spawn, run_command_spawn_envs,
 };
 
@@ -13,24 +13,13 @@ const PACK_DIR: &str = "lm_packet";
 const LATEST_PACK: &str = "latest";
 
 pub async fn do_build() -> MyResult<()> {
-  let mut env_m = dot_env_to_map_new().await?;
-  let mut check_v = CheckVersion::new("public", "dist").await;
+  let (env_m, check_v) = pre_work(false).await?;
+  let name = env_m.get("APP_KEY").cloned().unwrap();
 
-  env_m.insert(
-    "check_version".to_string(),
-    check_v.write_next().await?.n.to_string(),
-  );
-  env_m.insert("LM_BUILD_AT".to_string(), format_date_time_underscore());
   println!("开始构建: {:?}", env_m);
 
-  let mut build_task = run_command_spawn_envs(
-    "rspack build",
-    env_m.iter().map(|(a, b)| (a.as_str(), b.as_str())),
-  )
-  .await?;
+  let mut build_task = run_command_spawn_envs("rspack build", env_m).await?;
   let start = Instant::now();
-
-  let name = env_m.get("APP_KEY").cloned().unwrap_or("".to_string());
 
   let gz_path = format!(r"{}_{}.tar.gz", name, format_date_time_underscore());
 

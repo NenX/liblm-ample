@@ -41,7 +41,7 @@ pub async fn run_command_spawn(cmd_str: &str) -> std::io::Result<Child> {
 
 pub async fn run_command_spawn_envs(
   cmd_str: &str,
-  vars: impl IntoIterator<Item = (&str, &str)>,
+  vars: impl IntoIterator<Item = (String, String)>,
 ) -> std::io::Result<Child> {
   let c = platform_cmd(cmd_str);
   let c = config_cmd_io(c).envs(vars).spawn()?;

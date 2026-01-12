@@ -4,23 +4,21 @@ use tar::Entry;
 use tokio::fs::{self, ReadDir};
 
 use crate::util::{
-  MyResult, dot_env_to_map_new, format_date_time_underscore, run_command_spawn,
-  run_command_spawn_envs,
+  MyResult, dot_env_to_map_new, format_date_time_underscore, pre_work, run_command_spawn, run_command_spawn_envs
 };
 
 pub async fn do_start() -> MyResult<()> {
   copy_static().await?;
-  let mut env_m = dot_env_to_map_new().await?;
 
-  env_m.insert("ENVIRONMENT_MODE".into(), "development".into());
-  env_m.insert("LM_BUILD_AT".into(), format_date_time_underscore());
+  let (env_m, _) = pre_work(false).await?;
+  let name = env_m.get("APP_KEY").cloned().unwrap();
 
   println!("开始运行: {:?}", env_m);
 
   let mut start_task = run_command_spawn_envs(
     "rspack serve",
     // "dir",
-    env_m.iter().map(|a| (a.0.as_str(), a.1.as_str())),
+    env_m,
   )
   .await?;
 
@@ -36,7 +34,7 @@ async fn copy_static() -> MyResult<()> {
   let a = public_contains_lm_static().await?;
   let b = !Path::new(target_gz).exists();
   println!("copy static {a} {b}");
-  if a ||  b{
+  if a || b {
     return Ok(());
   }
   let cmd = &format!("tar -xzf {} -C public", target_gz);

@@ -30,7 +30,8 @@ export function client_macro_record(x: { [x: string]: any } = {}, raw = true) {
         API_PREFIX,
         PACKAGE_VERSION: safe_require('package.json').version,
         BUILDINFO: safe_require('build_meta.json'),
-        __HOST_URL: simple_encrypt_str(HOST_URL)
+        // __HOST_URL: simple_encrypt_str(HOST_URL),
+        // HOST_URL
 
     }
     const ret = {
