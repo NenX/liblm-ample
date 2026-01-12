@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <!--如果不配置，编辑器默认背景色为 #f3f5f7 -->
+        <style>
+          :root {--background-color: #f3f5f7;}  
+        </style>
+        <link rel="shortcut icon" href="./img/favicon.svg" type="image/svg+xml"/>
+        <link rel="stylesheet" href="./vender/jquery/zTreeStyle/zTreeStyle.css" type="text/css"> <!--仅设计模式需要引用-->
+        <script src = "./vender/jquery/jquery.js"></script><!--必须引用-->
+        <script src = "./vender/date97/WdatePicker.js"></script><!--必须引用-->
+        <script src = "./vender/jquery/jquery.ztree.core.min.js"></script> <!--仅设计模式需要引用-->
+        <script src = "./vender/jquery/jquery.ztree.exedit.min.js"></script><!--仅设计模式需要引用-->
+        <script src = "./vender/jquery/jquery.ztree.exhide.min.js"></script><!--仅设计模式需要引用-->
+        <script src = "./vender/fabric.js"></script><!--仅修改图片标注需要引用-->
+        <script src = "./vender/codemirror.js"></script><!--仅代码脚本需要引用-->
+        <script src="./js/editor.js"></script><!--必须引用-->
+        <script>
+          $(function() {
+            //配置项可以不设置，会使用默认设置
+            let option = {
+              license: 'XXXXXXXXXXXXXXXXXX', //授权字符串
+              mode: 'design'//设计模式
+            }
+            //编辑器初始化
+            editor.init(option).then(function(){
+              //指定文档ID加载病历文档
+              editor.loadUrl('./doc/100.html','100').then(function(){
+                  //设置文本
+                  editor.setBindObject('蒋华良','patientName')
+              })
+            })
+          })
+      </script>
+    </head>
+    <body>
+        <!-- 默认id 为editor -->
+        <div id="editor" style="width:100%; height:100%;"></div>
+    </body>
+</html>
