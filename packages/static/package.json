@@ -4,7 +4,7 @@
   "description": "",
   "scripts": {
     "build": "node ./write_meta.js && rollup -c rollup.config.js",
-    "gz": "cd asserts && tar -czvf all.tar.gz ./*"
+    "gz": "cd asserts && tar -czvf ../all.tar.gz ./*"
   },
   "main": "dist/index.js",
   "files": [
