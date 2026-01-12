@@ -24,6 +24,7 @@ export const lm_imgs_info = {
 } ;
 export const lm_libs_info = {
     "dirs": {
+        "X-EMR": "X-EMR",
         "fabric_5_2_0": "fabric_5_2_0",
         "monaco-editor-0.36.1": "monaco-editor-0.36.1"
     },
@@ -40,14 +41,17 @@ export const lm_pdfjs_info = {
 } ;
 export const all_files = {
     "lm_files": {
+        "/": "lm_files",
         "LMCSSetup.msi": "lm_files/LMCSSetup.msi",
         "test.pdf": "lm_files/test.pdf"
     },
     "lm_imgs": {
+        "/": "lm_imgs",
         "README.md": "lm_imgs/README.md",
         "gy-not-thing.png": "lm_imgs/gy-not-thing.png",
         "gy_payment.svg": "lm_imgs/gy_payment.svg",
         "mie": {
+            "/": "lm_imgs/mie",
             "back-hover.svg": "lm_imgs/mie/back-hover.svg",
             "back.svg": "lm_imgs/mie/back.svg",
             "circle-hover.svg": "lm_imgs/mie/circle-hover.svg",
@@ -81,6 +85,7 @@ export const all_files = {
             "triangle.svg": "lm_imgs/mie/triangle.svg"
         },
         "qn": {
+            "/": "lm_imgs/qn",
             "checkbox.png": "lm_imgs/qn/checkbox.png",
             "description.png": "lm_imgs/qn/description.png",
             "mackbook.png": "lm_imgs/qn/mackbook.png",
@@ -95,21 +100,34 @@ export const all_files = {
         }
     },
     "lm_libs": {
+        "/": "lm_libs",
+        "X-EMR": {
+            "/": "lm_libs/X-EMR",
+            "editor.html": "lm_libs/X-EMR/editor.html",
+            "js": "lm_libs/X-EMR/js/",
+            "stylesheets": "lm_libs/X-EMR/stylesheets/",
+            "vender": "lm_libs/X-EMR/vender/"
+        },
         "fabric_5_2_0": {
+            "/": "lm_libs/fabric_5_2_0",
             "fabric.js": "lm_libs/fabric_5_2_0/fabric.js",
             "fabric.min.js": "lm_libs/fabric_5_2_0/fabric.min.js"
         },
         "monaco-editor-0.36.1": {
+            "/": "lm_libs/monaco-editor-0.36.1",
             "min": "lm_libs/monaco-editor-0.36.1/min/"
         }
     },
     "lm_pdfjs": {
+        "/": "lm_pdfjs",
         "3.11.174": {
+            "/": "lm_pdfjs/3.11.174",
             "build": "lm_pdfjs/3.11.174/build/",
             "web": "lm_pdfjs/3.11.174/web/"
         },
         "README.md": "lm_pdfjs/README.md",
         "pdfjs-2.4.456": {
+            "/": "lm_pdfjs/pdfjs-2.4.456",
             "build": "lm_pdfjs/pdfjs-2.4.456/build/",
             "web": "lm_pdfjs/pdfjs-2.4.456/web/"
         }
