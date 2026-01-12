@@ -25,7 +25,7 @@ function getInfo() {
     const metaInfo = { entries }
     const all_files = {}
     entries.forEach(ent => {
-        const ent_files = all_files[ent] = {}
+        const ent_files = all_files[ent] = { '/': ent }
         const info = { dirs: {}, files: {} }
         const entPath = path.resolve(assertsPath, ent)
 
@@ -42,7 +42,7 @@ function getInfo() {
 
             if (stat.isDirectory()) {
                 info.dirs[i] = i
-                let sub_files = ent_files[i] = {}
+                let sub_files = ent_files[i] = { '/': path.relative(assertsPath, iPath) }
 
                 const sub = findEntries(iPath)
                 sub.forEach(s => {
