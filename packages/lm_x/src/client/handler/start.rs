@@ -4,19 +4,19 @@ use tar::Entry;
 use tokio::fs::{self, ReadDir};
 
 use crate::util::{
-  MyResult, dot_env_to_map_new, format_date_time_underscore, pre_work, run_command_spawn, run_command_spawn_envs
+  CONFIG_FILE, MyResult, dot_env_to_map_new, format_date_time_underscore, pre_work,
+  run_command_spawn, run_command_spawn_envs,
 };
 
 pub async fn do_start() -> MyResult<()> {
   copy_static().await?;
 
   let (env_m, _) = pre_work(false).await?;
-  let name = env_m.get("APP_KEY").cloned().unwrap();
 
   println!("开始运行: {:?}", env_m);
 
   let mut start_task = run_command_spawn_envs(
-    "rspack serve",
+    &format!("rspack serve -c {}", CONFIG_FILE),
     // "dir",
     env_m,
   )

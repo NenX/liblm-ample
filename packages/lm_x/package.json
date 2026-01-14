@@ -21,7 +21,8 @@
     "index.d.ts",
     "index.js",
     "browser.js",
-    "bin"
+    "bin",
+    "config.js"
   ],
   "bin": {
     "lm_x": "bin/lm_x.js"
@@ -60,6 +61,9 @@
     "_preversion": "napi build --platform && git add .",
     "_version": "napi version",
     "prepare": "husky"
+  },
+  "dependencies": {
+    "@rspack/plugin-react-refresh": "1.5.3"
   },
   "devDependencies": {
     "@emnapi/core": "^1.5.0",

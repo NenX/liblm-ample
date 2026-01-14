@@ -5,8 +5,8 @@ use std::path::Path;
 use tokio::{fs, time::Instant};
 
 use crate::util::{
-  CheckVersion, MyResult, dot_env_to_map_new, format_date_time_underscore, pre_work, run_command,
-  run_command_spawn, run_command_spawn_envs,
+  CONFIG_FILE, CheckVersion, MyResult, dot_env_to_map_new, format_date_time_underscore, pre_work,
+  run_command, run_command_spawn, run_command_spawn_envs,
 };
 
 const PACK_DIR: &str = "lm_packet";
@@ -18,7 +18,8 @@ pub async fn do_build() -> MyResult<()> {
 
   println!("开始构建: {:?}", env_m);
 
-  let mut build_task = run_command_spawn_envs("rspack build", env_m).await?;
+  let mut build_task =
+    run_command_spawn_envs(&format!("rspack build -c {}", CONFIG_FILE), env_m).await?;
   let start = Instant::now();
 
   let gz_path = format!(r"{}_{}.tar.gz", name, format_date_time_underscore());
