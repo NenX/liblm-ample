@@ -83,7 +83,7 @@ module.exports = defineConfig(
           ],
         },
 
-        (id_dev || IGNORE_OLD) ? false : {
+        (id_dev) ? false : {
           test: /\.(cjs|js)$/,
           include: /scroll-into-view-if-needed|compute-scroll-into-view|@ant-design/,
 
@@ -94,10 +94,20 @@ module.exports = defineConfig(
             }
           }
         },
+        (id_dev) ? false : {
+          test: /\.(mjs|js)$/,
+          include: /zustand/,
 
-        (id_dev || IGNORE_OLD) ? false : {
+          use: {
+            loader: 'babel-loader',
+            options: {
+              configFile: path.resolve('babel.config.json')
+            }
+          }
+        },
+        (id_dev) ? false : {
           test: /\.(?:js)$/,
-          include: /graphiql|dnd|graphql|meros|react|antd|rc-|@n1ru4l|punycode|dayjs|@lm_fe/,
+          include: /graphiql|dnd|graphql|meros|react|antd|rc-|@n1ru4l|punycode|dayjs/,
 
 
           use: [
