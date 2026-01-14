@@ -97,8 +97,8 @@ importers:
   packages/scripts:
     dependencies:
       '@lm_fe/static':
-        specifier: ^0.2.1
-        version: 0.2.2
+        specifier: ^0.2.3
+        version: link:../static
       '@noah-libjs/utils':
         specifier: 0.0.48
         version: 0.0.48(dayjs@1.11.13)
@@ -958,9 +958,6 @@ packages:
   '@lerna/create@9.0.3':
     resolution: {integrity: sha512-hUTEWrR8zH+/Z3bp/R1aLm6DW8vB/BB7KH7Yeg4fMfrvSwxegiLVW9uJFAzWkK4mzEagmj/Dti85Yg9MN13t0g==}
     engines: {node: ^20.19.0 || ^22.12.0 || >=24.0.0}
-
-  '@lm_fe/static@0.2.2':
-    resolution: {integrity: sha512-BhE5mhvhFvk1/p8d6F+EpCkDjTz6U/CCezr11A2u8/YVh7W98BA6/wUEru4eXbmtz/pzi/TuQXGwgrtQ3SjIVw==}
 
   '@mapbox/node-pre-gyp@2.0.3':
     resolution: {integrity: sha512-uwPAhccfFJlsfCxMYTwOdVfOz3xqyj8xYL3zJj8f0pb30tLohnnFPhLuqp4/qoEz8sNxe4SESZedcBojRefIzg==}
@@ -5512,8 +5509,6 @@ snapshots:
       - debug
       - supports-color
       - typescript
-
-  '@lm_fe/static@0.2.2': {}
 
   '@mapbox/node-pre-gyp@2.0.3(encoding@0.1.13)':
     dependencies:
