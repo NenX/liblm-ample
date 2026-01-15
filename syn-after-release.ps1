@@ -1,6 +1,5 @@
 
-git checkout release
-git pull
 git checkout main
+git pull origin release
 git merge release
 git push
