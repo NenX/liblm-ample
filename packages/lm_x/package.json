@@ -1,6 +1,6 @@
 {
   "name": "@lm_fe/lm_x",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "description": "Template project for writing node package with napi-rs",
   "main": "index.js",
   "repository": {
@@ -62,8 +62,6 @@
     "_preversion": "napi build --platform && git add .",
     "_version": "napi version",
     "prepare": "husky"
-  },
-  "dependencies": {
   },
   "devDependencies": {
     "@emnapi/core": "^1.5.0",

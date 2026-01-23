@@ -43,10 +43,6 @@ importers:
         version: 3.5.0
 
   packages/lm_x:
-    dependencies:
-      '@rspack/plugin-react-refresh':
-        specifier: 1.5.3
-        version: 1.5.3(react-refresh@0.18.0)
     devDependencies:
       '@emnapi/core':
         specifier: ^1.5.0
@@ -97,11 +93,14 @@ importers:
   packages/scripts:
     dependencies:
       '@lm_fe/static':
-        specifier: ^0.2.4
+        specifier: ^0.2.5
         version: link:../static
       '@noah-libjs/utils':
         specifier: 0.0.48
         version: 0.0.48(dayjs@1.11.13)
+      '@rspack/plugin-react-refresh':
+        specifier: 1.5.3
+        version: 1.5.3(react-refresh@0.18.0)
       chalk:
         specifier: ^4.1.2
         version: 4.1.2
