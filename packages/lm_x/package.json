@@ -25,7 +25,8 @@
     "config.js"
   ],
   "bin": {
-    "lm_x": "bin/lm_x.js"
+    "lm_x": "bin/lm_x.js",
+    "lm_raw": "index.js"
   },
   "napi": {
     "binaryName": "lm_x",
@@ -63,7 +64,6 @@
     "prepare": "husky"
   },
   "dependencies": {
-    "@rspack/plugin-react-refresh": "1.5.3"
   },
   "devDependencies": {
     "@emnapi/core": "^1.5.0",
