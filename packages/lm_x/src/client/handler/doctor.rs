@@ -25,7 +25,7 @@ pub async fn doctor_check() -> MyResult<()> {
       deps.push_str(" pm2");
     }
     if rspack_status.is_err() {
-      deps.push_str(" @rspack/cli@1.7.4 @rspack/core@1.7.4");
+      deps.push_str(" @rspack/cli@1.6.8 @rspack/core@1.6.8");
     }
 
     let mut child = run_command_spawn(&deps).await?;
