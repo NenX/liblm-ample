@@ -1,10 +1,9 @@
 use crate::util::{MyResult, run_command, run_command_spawn};
 
 pub async fn doctor_check() -> MyResult<()> {
-  let pnpm_status = run_command("pnpm -v").await;
   let pm2_status = run_command("pm2 -v").await;
   let rspack_status = run_command("rspack -v").await;
-  if rspack_status.is_ok() && pnpm_status.is_ok() && pm2_status.is_ok() {
+  if rspack_status.is_ok() && pm2_status.is_ok() {
     println!("检测成功！");
     return Ok(());
   }
@@ -17,10 +16,6 @@ pub async fn doctor_check() -> MyResult<()> {
     && yes
   {
     let mut deps = String::from("pnpm -g install");
-    if pnpm_status.is_err() {
-      let mut child = run_command_spawn("npm install -g pnpm").await?;
-      child.wait().await?;
-    }
     if pm2_status.is_err() {
       deps.push_str(" pm2");
     }
