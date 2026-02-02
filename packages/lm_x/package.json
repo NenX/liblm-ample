@@ -21,8 +21,7 @@
     "index.d.ts",
     "index.js",
     "browser.js",
-    "bin",
-    "config.js"
+    "bin"
   ],
   "bin": {
     "lm_x": "bin/lm_x.js",
@@ -46,7 +45,6 @@
   },
   "scripts": {
     "bench": "node --import @oxc-node/core/register benchmark/bench.ts",
-    "build0": "napi build --platform --release",
     "build:debug": "napi build --platform",
     "format": "run-p format:prettier format:rs format:toml",
     "format:prettier": "prettier . -w",
@@ -114,6 +112,8 @@
   },
   "packageManager": "yarn@4.12.0",
   "optionalDependencies": {
+    "@rspack/cli": "1.7.4",
+    "@rspack/core": "1.7.4",
     "@lm_fe/lm_x-darwin-arm64": "1.0.0",
     "@lm_fe/lm_x-darwin-x64": "1.0.0",
     "@lm_fe/lm_x-linux-x64-gnu": "1.0.0",
