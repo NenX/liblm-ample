@@ -111,12 +111,14 @@
     "arrowParens": "always"
   },
   "packageManager": "yarn@4.12.0",
+  "dependencies": {
+    "@rspack/cli": "1.7.4",
+    "@rspack/core": "1.7.4"
+  },
   "optionalDependencies": {
     "@lm_fe/lm_x-darwin-arm64": "1.0.0",
     "@lm_fe/lm_x-darwin-x64": "1.0.0",
     "@lm_fe/lm_x-linux-x64-gnu": "1.0.0",
-    "@lm_fe/lm_x-win32-x64-msvc": "1.0.0",
-    "@rspack/cli": "1.7.4",
-    "@rspack/core": "1.7.4"
+    "@lm_fe/lm_x-win32-x64-msvc": "1.0.0"
   }
 }
