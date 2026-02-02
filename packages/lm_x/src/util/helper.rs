@@ -4,7 +4,7 @@ use chrono::Local;
 
 use crate::util::{CheckVersion, error::MyResult, run_command};
 
-pub const CONFIG_FILE: &str = "node_modules/@lm_fe/lm_x/config.js";
+pub const CONFIG_FILE: &str = "node_modules/@lm_fe/scripts/assets/config.js";
 
 pub fn format_date_time() -> String {
   let now = Local::now();
@@ -18,6 +18,10 @@ pub fn format_date_time_underscore() -> String {
 }
 
 pub async fn dot_env_to_map_new() -> MyResult<HashMap<String, String>> {
+  if !tokio::fs::try_exists("env.js").await? {
+    tokio::fs::copy("node_modules/@lm_fe/scripts/assets/env.js", "env.js").await?;
+  }
+
   let code = if cfg!(windows) {
     r#"node -e console.log(JSON.stringify(require('./env.js')))"#.to_string()
   } else {
