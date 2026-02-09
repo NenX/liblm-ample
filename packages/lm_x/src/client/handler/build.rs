@@ -16,7 +16,6 @@ pub async fn do_build() -> MyResult<()> {
   let (env_m, check_v) = pre_work(false).await?;
   let name = env_m.get("APP_KEY").cloned().unwrap();
 
-  println!("开始构建: {:?}", env_m);
 
   let mut build_task =
     run_command_spawn_envs(&format!("rspack build -c {}", CONFIG_FILE), env_m).await?;

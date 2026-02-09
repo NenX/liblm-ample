@@ -56,9 +56,8 @@ fn test_simple_encrypt_str() {
 pub async fn pre_work(dev_mod: bool) -> MyResult<(HashMap<String, String>, CheckVersion)> {
   let mut env_m = dot_env_to_map_new().await?;
   let mut check_v = CheckVersion::new("public", "dist").await;
-
   if env_m.contains_key("HOST_URL") {
-    let host_url = env_m.remove("HOST_URL").unwrap();
+    let host_url = env_m.get("HOST_URL").unwrap();
 
     env_m.insert("LM_HOST_URL".into(), simple_encrypt_str(&host_url));
   }

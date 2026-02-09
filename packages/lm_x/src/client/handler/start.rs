@@ -13,7 +13,6 @@ pub async fn do_start() -> MyResult<()> {
 
   let (env_m, _) = pre_work(false).await?;
 
-  println!("开始运行: {:?}", env_m);
 
   let mut start_task = run_command_spawn_envs(
     &format!("rspack serve -c {}", CONFIG_FILE),
