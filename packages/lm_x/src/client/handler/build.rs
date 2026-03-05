@@ -5,8 +5,7 @@ use std::path::Path;
 use tokio::{fs, time::Instant};
 
 use crate::util::{
-  CONFIG_FILE, CheckVersion, MyResult, dot_env_to_map_new, format_date_time_underscore, pre_work,
-  run_command, run_command_spawn, run_command_spawn_envs,
+  CONFIG_FILE, CheckVersion, MyResult, dot_env_to_map_new, format_date_time_underscore, mov_public_items, pre_work, run_command, run_command_spawn, run_command_spawn_envs
 };
 
 const PACK_DIR: &str = "lm_packet";
@@ -26,7 +25,7 @@ pub async fn do_build() -> MyResult<()> {
   if !build_task.wait().await?.success() {
     return Err("haha".into());
   }
-  mov_the_fucking_things_new().await?;
+  mov_public_items().await?;
 
   check_v.write_to().await?;
 
@@ -44,48 +43,6 @@ pub async fn compress_dist(name: &Path) -> MyResult<()> {
   }
 
   let cmd = &format!("cd dist && tar -czf ../{} ./*", name.to_str().unwrap());
-
-  let mut c = run_command_spawn(cmd).await?;
-  c.wait().await?;
-
-  // if cfg!(windows) || test {
-  //   let tar_gz = std::fs::File::create(name)?;
-  //   let enc = GzEncoder::new(tar_gz, Compression::default());
-  //   let mut tar = tar::Builder::new(enc);
-  //   tar.append_dir_all(".", "dist")?;
-  //   tar.finish()?;
-  //   // let _ = run_command(&format!("explorer {}", PACK_DIR)).await;
-  // } else {
-  //   let cmd = &format!("cd dist && tar -czf ../{} ./*", name.to_str().unwrap());
-  //   println!("compress cmd {}", cmd);
-  //   let mut c = run_command_spawn(cmd).await?;
-  //   c.wait().await?;
-  // }
-  Ok(())
-}
-fn mov_the_fucking_things() -> fs_extra::error::Result<()> {
-  let mut options = CopyOptions::new();
-  // options.overwrite = true;
-  options.content_only = true;
-  options.skip_exist = true;
-  // let from_paths = vec![
-  //     "public/img"
-  // ];
-  // fs_extra::copy_items(&from_paths, target, &options)?;
-  fs_extra::dir::copy("public", "dist", &options)?;
-
-  Ok(())
-}
-async fn mov_the_fucking_things_new() -> MyResult<()> {
-  let public_tar_name = "public.tar.gz";
-  let public_tar_path = Path::new(public_tar_name);
-  if !public_tar_path.exists() {
-    let cmd = &format!("cd public && tar -czf ../{} ./*", public_tar_name);
-
-    let mut c = run_command_spawn(cmd).await?;
-    c.wait().await?;
-  }
-  let cmd = &format!("tar -xzf {} -C dist", public_tar_name);
 
   let mut c = run_command_spawn(cmd).await?;
   c.wait().await?;

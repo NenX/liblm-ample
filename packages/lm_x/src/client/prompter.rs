@@ -5,7 +5,7 @@ use inquire::{MultiSelect, Select};
 use crate::{
   client::{
     argment::SubCmd,
-    handler::{do_build, do_start, doctor_check, doctor_rm_deps},
+    handler::{do_build, do_install, do_start, doctor_check, doctor_rm_deps},
   },
   util::MyResult,
 };
@@ -19,11 +19,12 @@ pub async fn handle() -> MyResult<()> {
   };
 
   match project {
-    SubCmd::Install(_) => {
-      let a = MultiSelect::new("请输入 port", Vec::from(["aa", "bb"]))
-        .prompt()
-        .expect("不会了");
-      println!("你选择了：{}, port {:?}", project, a);
+    SubCmd::Install => {
+      // let a = MultiSelect::new("请输入 port", Vec::from(["aa", "bb"]))
+      //   .prompt()
+      //   .expect("不会了");
+      // println!("你选择了：{}, port {:?}", project, a);
+      do_install().await?;
     }
     SubCmd::Build => do_build().await?,
     SubCmd::Start => do_start().await?,

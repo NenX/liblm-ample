@@ -19,8 +19,8 @@ pub struct InstallArgs {
 }
 #[derive(Subcommand, Clone, Debug)]
 pub enum SubCmd {
-  /// 安装 lm_fe 依赖安装到本地，可指定单一依赖
-  Install(InstallArgs),
+  /// 安装依赖
+  Install,
   /// 打包本地项目并压缩
   Build,
   Start,
@@ -28,6 +28,7 @@ pub enum SubCmd {
   DoctorRm,
   /// 更新本地 GitHub Host，加快访问速度
   Doctor,
+
 }
 
 impl SubCmd {
@@ -35,7 +36,7 @@ impl SubCmd {
     vec![
       SubCmd::Start,
       SubCmd::Build,
-      SubCmd::Install(InstallArgs::default()),
+      SubCmd::Install,
       SubCmd::Doctor,
       SubCmd::DoctorRm,
     ]
@@ -44,7 +45,7 @@ impl SubCmd {
 impl Display for SubCmd {
   fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
     match self {
-      SubCmd::Install(_) => write!(f, "install"),
+      SubCmd::Install => write!(f, "安装依赖"),
       SubCmd::Build => write!(f, "build"),
       SubCmd::Start => write!(f, "start"),
       SubCmd::DoctorRm => write!(f, "移除环境依赖"),

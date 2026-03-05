@@ -2,7 +2,7 @@ use std::collections::HashMap;
 
 use chrono::Local;
 
-use crate::util::{CheckVersion, error::MyResult, run_command};
+use crate::util::{CheckVersion, error::MyResult, run_command, run_command_spawn};
 
 pub const CONFIG_FILE: &str = "node_modules/@lm_fe/scripts/assets/config.js";
 
@@ -17,11 +17,13 @@ pub fn format_date_time_underscore() -> String {
   now.format("%y_%m%d_%H%M").to_string()
 }
 
-pub async fn dot_env_to_map_new() -> MyResult<HashMap<String, String>> {
+pub async fn copy_envjs() -> MyResult<()> {
   if !tokio::fs::try_exists("env.js").await? {
     tokio::fs::copy("node_modules/@lm_fe/scripts/assets/env.js", "env.js").await?;
   }
-
+  Ok(())
+}
+pub async fn dot_env_to_map_new() -> MyResult<HashMap<String, String>> {
   let code = if cfg!(windows) {
     r#"node -e console.log(JSON.stringify(require('./env.js')))"#.to_string()
   } else {
@@ -48,10 +50,6 @@ pub fn simple_encrypt_str(data: &str) -> String {
 
   return aa.join("@@");
 }
-#[test]
-fn test_simple_encrypt_str() {
-  assert_eq!(simple_encrypt_str("123"), "-50@@68@@186");
-}
 
 pub async fn pre_work(dev_mod: bool) -> MyResult<(HashMap<String, String>, CheckVersion)> {
   let mut env_m = dot_env_to_map_new().await?;
@@ -72,4 +70,51 @@ pub async fn pre_work(dev_mod: bool) -> MyResult<(HashMap<String, String>, Check
   env_m.insert("ENVIRONMENT_MODE".into(), mode.into());
 
   Ok((env_m, check_v))
+}
+pub async fn mov_public_items() -> MyResult<()> {
+  let public_tar_name = "public.tar.gz";
+  let public_tar_path = std::path::Path::new(public_tar_name);
+  if !public_tar_path.exists() {
+    let cmd = &format!("cd public && tar -czf ../{} ./*", public_tar_name);
+
+    let mut c = run_command_spawn(cmd).await?;
+    c.wait().await?;
+  }
+  let cmd = &format!("tar -xzf {} -C dist", public_tar_name);
+
+  let mut c = run_command_spawn(cmd).await?;
+  c.wait().await?;
+
+  Ok(())
+}
+
+pub async fn copy_static() -> MyResult<()> {
+  let target_gz = "node_modules/@lm_fe/static/all.tar.gz";
+  let a = public_contains_lm_static().await?;
+  let b = !std::path::Path::new(target_gz).exists();
+  println!("copy static {a} {b}");
+  if a || b {
+    return Ok(());
+  }
+  let cmd = &format!("tar -xzf {} -C public", target_gz);
+  println!("cmd => {cmd}");
+  let mut c = run_command_spawn(cmd).await?;
+  c.wait().await?;
+
+  Ok(())
+}
+async fn public_contains_lm_static() -> MyResult<bool> {
+  use tokio_stream::StreamExt;
+  use tokio_stream::wrappers::ReadDirStream;
+  let dir = tokio::fs::read_dir("public").await?;
+  let result = ReadDirStream::new(dir)
+    .any(|res| {
+      res
+        .unwrap()
+        .file_name()
+        .to_str()
+        .map_or(false, |x| x.starts_with("lm_"))
+    })
+    .await;
+  Ok(result)
 }
