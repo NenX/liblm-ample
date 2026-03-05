@@ -1,11 +1,9 @@
-use flate2::{Compression, write::GzEncoder};
-use fs_extra::dir::CopyOptions;
 
 use std::path::Path;
 use tokio::{fs, time::Instant};
 
 use crate::util::{
-  CONFIG_FILE, CheckVersion, MyResult, dot_env_to_map_new, format_date_time_underscore, mov_public_items, pre_work, run_command, run_command_spawn, run_command_spawn_envs
+  CONFIG_FILE, MyResult, format_date_time_underscore, mov_public_items, pre_work, run_command_spawn, run_command_spawn_envs
 };
 
 const PACK_DIR: &str = "lm_packet";

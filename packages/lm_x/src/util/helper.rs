@@ -48,7 +48,7 @@ pub fn simple_encrypt_str(data: &str) -> String {
     });
   let aa: Vec<_> = aa.collect();
 
-  return aa.join("@@");
+  aa.join("@@")
 }
 
 pub async fn pre_work(dev_mod: bool) -> MyResult<(HashMap<String, String>, CheckVersion)> {
@@ -57,7 +57,7 @@ pub async fn pre_work(dev_mod: bool) -> MyResult<(HashMap<String, String>, Check
   if env_m.contains_key("HOST_URL") {
     let host_url = env_m.get("HOST_URL").unwrap();
 
-    env_m.insert("LM_HOST_URL".into(), simple_encrypt_str(&host_url));
+    env_m.insert("LM_HOST_URL".into(), simple_encrypt_str(host_url));
   }
 
   env_m.insert(
@@ -113,7 +113,7 @@ async fn public_contains_lm_static() -> MyResult<bool> {
         .unwrap()
         .file_name()
         .to_str()
-        .map_or(false, |x| x.starts_with("lm_"))
+        .is_some_and(|x| x.starts_with("lm_"))
     })
     .await;
   Ok(result)

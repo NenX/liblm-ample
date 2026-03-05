@@ -1,6 +1,6 @@
 use std::process;
 
-use inquire::{MultiSelect, Select};
+use inquire::Select;
 
 use crate::{
   client::{
