@@ -7,7 +7,7 @@ use crate::util::{
 pub async fn do_start() -> MyResult<()> {
 
 
-  let (env_m, _) = pre_work(false).await?;
+  let (env_m, _) = pre_work(true).await?;
 
 
   let mut start_task = run_command_spawn_envs(

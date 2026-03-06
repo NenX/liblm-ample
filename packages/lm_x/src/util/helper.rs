@@ -59,11 +59,10 @@ pub async fn pre_work(dev_mod: bool) -> MyResult<(HashMap<String, String>, Check
 
     env_m.insert("LM_HOST_URL".into(), simple_encrypt_str(host_url));
   }
-
-  env_m.insert(
-    "check_version".into(),
-    check_v.write_next().await?.n.to_string(),
-  );
+  if !dev_mod {
+    check_v.write_next().await?;
+  }
+  env_m.insert("check_version".into(), check_v.n.to_string());
   env_m.insert("LM_BUILD_AT".into(), format_date_time_underscore());
 
   let mode = if dev_mod { "development" } else { "production" };

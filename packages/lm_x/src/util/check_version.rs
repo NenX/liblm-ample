@@ -44,7 +44,7 @@ impl CheckVersion {
 
     Ok(())
   }
-  pub async fn write(&self) -> MyResult<&Self> {
+  async fn write(&self) -> MyResult<&Self> {
     let src_path: &Path = self.src_dir.as_ref();
     let src = src_path.join(FILE_NAME);
     fs::write(src, self.n.to_string()).await?;
