@@ -4,7 +4,7 @@ use napi_derive::napi;
 use crate::{
   client::{
     argment::{Cli, SubCmd},
-    handler::{do_build, do_install, do_start, doctor_check, doctor_rm_deps},
+    handler::{do_build, do_install, do_libdev, do_start, doctor_check, doctor_rm_deps},
   },
   util::MyResult,
 };
@@ -20,10 +20,11 @@ pub async fn handle(args: Vec<String>) -> MyResult<A> {
     SubCmd::Install => {
       do_install().await?;
     }
-    SubCmd::Build =>  do_build().await?,
+    SubCmd::Build => do_build().await?,
     SubCmd::Start => do_start().await?,
     SubCmd::DoctorRm => doctor_rm_deps().await?,
     SubCmd::Doctor => doctor_check().await?,
+    SubCmd::LibDev => do_libdev().await?,
   };
   Ok(A {
     name: "haha".to_string(),

@@ -28,7 +28,8 @@ pub enum SubCmd {
   DoctorRm,
   /// 更新本地 GitHub Host，加快访问速度
   Doctor,
-
+  /// 库开发准备
+  LibDev,
 }
 
 impl SubCmd {
@@ -39,6 +40,7 @@ impl SubCmd {
       SubCmd::Install,
       SubCmd::Doctor,
       SubCmd::DoctorRm,
+      SubCmd::LibDev,
     ]
   }
 }
@@ -50,6 +52,7 @@ impl Display for SubCmd {
       SubCmd::Start => write!(f, "start"),
       SubCmd::DoctorRm => write!(f, "移除环境依赖"),
       SubCmd::Doctor => write!(f, "环境检测"),
+      SubCmd::LibDev => write!(f, "库开发准备"),
     }
   }
 }
