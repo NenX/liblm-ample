@@ -4,8 +4,13 @@ pub async fn do_libdev() -> MyResult<()> {
   // let mut start_task = run_command_spawn("cd .. && dir").await?;
   let is_existed = tokio::fs::try_exists("../liblm").await?;
   if !is_existed {
-    let mut clone_task =
-      run_command_spawn("cd .. && git clone https://github.com/NenX/liblm.git").await?;
+    let prompter = inquire::Text::new("请输入你 Fork 后的 liblm 仓库地址");
+    let Ok(project) = prompter.prompt() else {
+      std::process::exit(0)
+    };
+
+    let url = format!("cd .. && git clone {}", project);
+    let mut clone_task = run_command_spawn(&url).await?;
 
     if !clone_task.wait().await?.success() {
       return Err("拉取 liblm 仓库失败".into());
@@ -27,11 +32,12 @@ pub async fn do_libdev() -> MyResult<()> {
 
   let is_existed = tokio::fs::try_exists("../liblm/node_modules").await?;
   if !is_existed {
-    let mut install_task = run_command_spawn("cd ../liblm && pnpm i").await?;
+    let mut install_task = run_command_spawn("cd ../liblm && pnpm i && pnpm run build").await?;
 
     if !install_task.wait().await?.success() {
-      return Err("安装 liblm 依赖失败".into());
+      return Err("liblm 仓库初始化失败".into());
     }
   }
+
   Ok(())
 }
