@@ -4,13 +4,6 @@ pub async fn do_libdev() -> MyResult<()> {
   // let mut start_task = run_command_spawn("cd .. && dir").await?;
   let is_existed = tokio::fs::try_exists("../liblm").await?;
   if !is_existed {
-    let prompter = inquire::Select::new("是否拉取 liblm 仓库", vec!["是", "否"]);
-    let Ok(project) = prompter.prompt() else {
-      std::process::exit(0)
-    };
-    if project != "是" {
-      std::process::exit(0)
-    }
     let mut clone_task =
       run_command_spawn("cd .. && git clone https://github.com/NenX/liblm.git").await?;
 
@@ -32,5 +25,13 @@ pub async fn do_libdev() -> MyResult<()> {
   }
   tokio::fs::remove_file("pnpm-workspace.yaml").await?;
 
+  let is_existed = tokio::fs::try_exists("../liblm/node_modules").await?;
+  if !is_existed {
+    let mut install_task = run_command_spawn("cd ../liblm && pnpm i").await?;
+
+    if !install_task.wait().await?.success() {
+      return Err("安装 liblm 依赖失败".into());
+    }
+  }
   Ok(())
 }
