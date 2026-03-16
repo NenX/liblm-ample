@@ -11,10 +11,10 @@ pub fn plus_100(input: u32) -> u32 {
 }
 
 #[napi]
-pub async fn cli(args: Vec<String>) -> client::cli::A {
-  client::cli::handle(args).await.unwrap()
+pub async fn cli(args: Vec<String>) -> client::A {
+  client::cli_handler(args).await.unwrap()
 }
 #[napi]
 pub async fn prompt() {
-  client::prompter::handle().await.unwrap()
+  client::prompt_handle().await.unwrap()
 }
