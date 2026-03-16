@@ -3,9 +3,8 @@ use napi_derive::napi;
 
 use crate::{
   client::{
-    argment::{Cli, SubCmd},
+    argment::Cli,
     handle::do_handle,
-    handler::{do_build, do_install, do_libdev, do_start, doctor_check, doctor_rm_deps},
   },
   util::MyResult,
 };

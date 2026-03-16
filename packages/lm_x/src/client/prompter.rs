@@ -5,8 +5,7 @@ use inquire::Select;
 use crate::{
   client::{
     argment::SubCmd,
-    handle::{self, do_handle},
-    handler::{do_build, do_install, do_libdev, do_start, doctor_check, doctor_rm_deps},
+    handle::do_handle,
   },
   util::MyResult,
 };
