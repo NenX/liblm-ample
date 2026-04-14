@@ -37,7 +37,7 @@
   },
   "dependencies": {
     "@lm_fe/static": "^0.2.16",
-    "@noah-libjs/utils": "0.0.48",
+    "@noah-libjs/utils": "0.0.51",
     "@rspack/plugin-react-refresh": "1.6.0",
     "chalk": "^4.1.2",
     "dayjs": "^1.11.13",
