@@ -93,11 +93,11 @@ importers:
   packages/scripts:
     dependencies:
       '@lm_fe/static':
-        specifier: ^0.2.17
+        specifier: ^0.2.18
         version: link:../static
       '@noah-libjs/utils':
-        specifier: 0.0.51
-        version: 0.0.51(dayjs@1.11.13)
+        specifier: latest
+        version: 0.0.52(dayjs@1.11.13)
       '@rspack/plugin-react-refresh':
         specifier: 1.6.0
         version: 1.6.0(react-refresh@0.18.0)
@@ -1316,8 +1316,8 @@ packages:
     resolution: {integrity: sha512-enkZYyuCdo+9jneCPE/0fjIta4wWnvVN9hBo2HuiMpRF0q3lzv1J6b/cl7i0mxZUKhBrV3aCKDBQnCOhwKbPmQ==}
     engines: {node: '>= 10'}
 
-  '@noah-libjs/utils@0.0.51':
-    resolution: {integrity: sha512-nHI1Bu0PVBgF82RO29Cbb5gvGAfL4Q9G/RFPWOP2PDSsupGzd9kDGQV3yOZVgH3t2lrN+GKyI0RDVgvrlFP5Dg==}
+  '@noah-libjs/utils@0.0.52':
+    resolution: {integrity: sha512-OHtf+XJ71zjkVlgNyEvCxJspqfr/1K/c1ZqRJWMqsH804+NmQRiKbKyriIIkfwuE5XYfQcj865YRp60H01wgVg==}
     peerDependencies:
       dayjs: ^1.11.13
 
@@ -5773,7 +5773,7 @@ snapshots:
       '@napi-rs/wasm-tools-win32-ia32-msvc': 1.0.1
       '@napi-rs/wasm-tools-win32-x64-msvc': 1.0.1
 
-  '@noah-libjs/utils@0.0.51(dayjs@1.11.13)':
+  '@noah-libjs/utils@0.0.52(dayjs@1.11.13)':
     dependencies:
       dayjs: 1.11.13
       radash: 12.1.1
